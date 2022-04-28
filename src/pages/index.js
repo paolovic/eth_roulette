@@ -9,6 +9,7 @@ import { TotalCustomers } from '../components/dashboard/total-customers';
 import { TotalProfit } from '../components/dashboard/total-profit';
 import { TrafficByDevice } from '../components/dashboard/traffic-by-device';
 import { DashboardLayout } from '../components/dashboard-layout';
+import { RouletteWheel } from 'src/components/wheel/roulette-wheel';
 
 const Dashboard = () => (
   <>
@@ -29,7 +30,7 @@ const Dashboard = () => (
           container
           spacing={3}
         >
-          <Grid
+          {/* <Grid
             item
             lg={3}
             sm={6}
@@ -64,7 +65,7 @@ const Dashboard = () => (
             xs={12}
           >
             <TotalProfit sx={{ height: '100%' }} />
-          </Grid>
+          </Grid> */}
           <Grid
             item
             lg={8}
@@ -72,7 +73,8 @@ const Dashboard = () => (
             xl={9}
             xs={12}
           >
-            <Sales />
+            {/* <Sales /> */}
+            <RouletteWheel/>
           </Grid>
           <Grid
             item

@@ -87,11 +87,12 @@ export const DashboardSidebar = (props) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          height: '100%'
+          height: '100%',
+          paddingTop : 8
         }}
       >
         <div>
-          <Box sx={{ p: 3 }}>
+          {/* <Box sx={{ p: 3 }}>
             <NextLink
               href="/"
               passHref
@@ -105,7 +106,7 @@ export const DashboardSidebar = (props) => {
                 />
               </a>
             </NextLink>
-          </Box>
+          </Box> */}
           <Box sx={{ px: 2 }}>
             <Box
               sx={{
@@ -168,7 +169,7 @@ export const DashboardSidebar = (props) => {
             py: 3
           }}
         >
-          <Typography
+          {/* <Typography
             color="neutral.100"
             variant="subtitle2"
           >
@@ -210,7 +211,7 @@ export const DashboardSidebar = (props) => {
             >
               Pro Live Preview
             </Button>
-          </NextLink>
+          </NextLink> */}
         </Box>
       </Box>
     </>
