@@ -1,96 +1,46 @@
-## [Material Kit - React](https://material-kit-react.devias.io/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=%F0%9F%9A%A8Devias%20Freebie%20Alert%20-%20An%20awesome%20ready-to-use%20register%20page%20made%20with%20%23material%20%23react%0D%0Ahttps%3A%2F%2Fdevias.io%20%23createreactapp%20%23devias%20%23material%20%23freebie%20%40devias-io)
+# SoPra FS22 - Client Template
 
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+## Getting started
 
-[![Material Kit - React](https://github.com/devias-io/material-kit-react/blob/main/public/static/thumbnail.png)](https://material-kit-react.devias.io/)
+Read and go through these Tutorials. It will make your life easier!
 
-> Free React Admin Dashboard made with [MUI's](https://mui.com/?ref=devias-io) components, [React](https://reactjs.org/?ref=devias-io) and of course [Next.js](https://github.com/vercel/next.js/?ref=devias-io) to boost your app development process!
+- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
+- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
+- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
 
-## Demo
+Next, there are two other technologies that you should look at:
 
-- [Dashboard Page](https://material-kit-react.devias.io)
-- [Users Page](https://material-kit-react.devias.io/customers)
-- [Products Page](https://material-kit-react.devias.io/products)
-- [Register Page](https://material-kit-react.devias.io/register)
-- [Login Page](https://material-kit-react.devias.io/login)
-- [Account Page](https://material-kit-react.devias.io/account)
-- [Settings Page](https://material-kit-react.devias.io/settings)
+* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
+* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
 
-## Free Figma Community File
- - [Duplicate File](https://www.figma.com/community/file/1039837897183395483/Devias-Dashboard-Design-Library-Kit)
+## Prerequisites and Installation
+For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
 
-## Upgrade to PRO Version
+```npm install```
 
-We also have a pro version of this product which bundles even more pages and components if you want to save more time and design efforts :)
+Run this command before you start your application for the first time. Next, you can start the app with:
 
-| Free Version (this one)  | [Material Kit Pro - React](https://material-ui.com/store/items/devias-kit-pro/) |
-| ------------------------ | :----------------------------------------------------------- |
-| **7** Demo Pages         | **40+** demo pages
-| -                        | ✔ Dark & light mode
-| -                        | ✔ Authentication with *Amplify**, **Auth0**, **JWT** and **Firebase**
-| -                        | ✔ TypeScript version - for Standard Plus and Extended license
-| -                        | ✔ Design files (sketch & figma) - for Standard Plus and Extended license
-| -                        | ✔ Complete users flows
+```npm run dev```
 
-## Quick start
+Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-- [Download from Github](https://github.com/devias-io/material-kit-react/archive/master.zip) or [Download from Devias](https://devias.io/products/material-kit-react) or clone the repo: `git clone https://github.com/devias-io/material-kit-react.git`
+Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
 
-- Make sure your NodeJS and npm versions are up to date for `React 17`
+### Testing
+Testing is optional, and you can run the tests with `npm run test`.
+This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- Install dependencies: `npm install` or `yarn`
+> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
 
-- Start the server: `npm run dev` or `yarn dev`
+### Build
+Finally, `npm run build` builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
 
-- Views are on: `localhost:3000`
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## File Structure
+## Learn More
 
-Within the download you'll find the following directories and files:
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-```
-material-kit-react
 
-┌── .eslintrc.json
-├── .gitignore
-├── CHANGELOG.md
-├── jsconfig.json
-├── LICENSE.md
-├── package.json
-├── README.md
-├── public
-└── src
-	├── __mocks__
-	├── components
-	├── icons
-	├── theme
-	├── utils
-	└── pages
-		├── 404.js
-		├── _app.js
-		├── _document.js
-		├── account.js
-		├── customers.js
-		├── index.js
-		├── login.js
-		├── products.js
-		├── register.js
-		└── settings.js
-```
-
-## Resources
-
-- More freebies like this one: <https://devias.io>
-
-## Reporting Issues:
-
-- [Github Issues Page](https://github.com/devias-io/react-material-dashboard/issues?ref=devias-io)
-
-## License
-
-- Licensed under MIT (https://github.com/devias-io/react-material-dashboard/blob/master/LICENSE.md)
-
-## Contact Us
-
-- Email Us: support@deviasio.zendesk.com
-- [Follow us on Instagram](https://www.instagram.com/deviasio/)
+> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
