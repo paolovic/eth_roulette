@@ -8,13 +8,22 @@
     @include center;
     flex-direction: column;
   }
+  &.wheel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    margin: 5em;
+  }
   &.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
-    max-width: 30em;
-    height: 20em;
+    width: 40em;
+    height: 40em;
     font-size: 16px;
     font-weight: 300;
     padding-left: 37px;

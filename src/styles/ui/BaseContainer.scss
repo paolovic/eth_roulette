@@ -7,4 +7,9 @@
   padding-right: 15px;
   max-width: $DESKTOP_WIDTH;
   color: $textColor;
+
+  &.base {
+    display: flex;
+    flex-direction: row;
+  }
 }
