@@ -328,10 +328,11 @@ li {
     text-align: center;
     display: block;
     transform: skewY(19.459459459459459459deg) rotate(4.864864864864864deg);
-    padding-top: 20px;
+    padding-top: 10px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 18px;
+    color: white;
 }
 
 .arrow {
@@ -356,6 +357,6 @@ li {
     }
 }
 
-.stop-rotate{
+.stop-rotate {
     animation-play-state: paused;
 }
