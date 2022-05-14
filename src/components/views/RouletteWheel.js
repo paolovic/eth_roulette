@@ -1,103 +1,211 @@
-import React, { useState } from 'react'
-import { Wheel } from 'react-custom-roulette'
 import { Button } from 'components/ui/Button';
-import BaseContainer from "components/ui/BaseContainer";
+import React, { useState } from 'react';
+import 'styles/views/RouletteWheel.scss';
 
-const data = [
-    { option: '0' },
-    { option: '32' },
-    { option: '15' },
-    { option: '19' },
-    { option: '4' },
-    { option: '21' },
-    { option: '2' },
-    { option: '25' },
-    { option: '17' },
-    { option: '34' },
-    { option: '6' },
-    { option: '27' },
-    { option: '13' },
-    { option: '36' },
-    { option: '11' },
-    { option: '30' },
-    { option: '8' },
-    { option: '23' },
-    { option: '10' },
-    { option: '5' },
-    { option: '24' },
-    { option: '16' },
-    { option: '33' },
-    { option: '1' },
-    { option: '20' },
-    { option: '14' },
-    { option: '31' },
-    { option: '9' },
-    { option: '22' },
-    { option: '18' },
-    { option: '29' },
-    { option: '7' },
-    { option: '28' },
-    { option: '12' },
-    { option: '35' },
-    { option: '3' },
-    { option: '26' }
-]
+const RouletteWheel = () => {
+    const [state, setState] = useState({ name: "circle" });
 
-
-
-export const RouletteWheel = () => {
-    const [mustSpin, setMustSpin] = useState(false);
-    const [prizeNumber, setPrizeNumber] = useState(0);
-
-    const handleSpinClick = () => {
-        setMustSpin(true)
-        const newPrizeNumber = Math.floor(Math.random() * data.length);
-        setPrizeNumber(newPrizeNumber)
+    const startRotation = () => {
+        setState({
+            name: "circle start-rotate"
+        });
+        setTimeout(() => {
+            setState({
+                name: "circle start-rotate stop-rotate"
+            });
+        }, Math.floor(Math.random() * 10000) + 1);
     }
 
     return (
-
-        <BaseContainer>
-                <div className="login form">
-                    <Wheel
-                        className="login wheel"
-                        mustStartSpinning={mustSpin}
-                        prizeNumber={prizeNumber}
-                        data={data}
-                        backgroundColors={['#016D29',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                            '#df3428', '#3e3e3e',
-                        ]}
-                        textColors={['#ffffff']}
-
-                        onStopSpinning={() => {
-                            setMustSpin(false);
-                        }}
-                        innerBorderWidth={2}
-                        radiusLineColor={'yellow'}
-                        radiusLineWidth={1}
-                        innerRadius={30}
-                        textDistance={80}
-                        spinDuration={1}
-                    />
-                    <Button onClick={handleSpinClick}>SPIN</Button>
-                </div>
-        </BaseContainer>
+        <div>
+            <div className='arrow'></div>
+            <ul className={state.name}>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    0
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    1
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    2
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    3
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    4
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    5
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    6
+                </div></li><li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    7
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    8
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    9
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    10
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    11
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    12
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    13
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    14
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    15
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    16
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    17
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    18
+                </div></li><li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    19
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    20
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    21
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    22
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    23
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    24
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    25
+                </div></li><li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    26
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    27
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    28
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    29
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    30
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    31
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    32
+                </div></li><li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    33
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    34
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    35
+                </div></li>
+                <li><div className='text'
+                    contentEditable='true'
+                    spellCheck='false'>
+                    36
+                </div></li>
+            </ul>
+            <Button className="wheel"
+                onClick={startRotation}>SPIN</Button>
+        </div>
     )
-} 
+}
+
+export default RouletteWheel;
