@@ -1,9 +1,9 @@
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {GameGuard} from "components/routing/routeProtectors/GameGuard";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { GameGuard } from "components/routing/routeProtectors/GameGuard";
 import GameRouter from "components/routing/routers/GameRouter";
-import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
+import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
-import { RouletteWheel } from "components/views/RouletteWheel";
+import RouletteWheel from "components/views/RouletteWheel";
 
 /**
  * Main router of your application.
@@ -20,16 +20,16 @@ const AppRouter = () => {
       <Switch>
         <Route path="/game">
           <GameGuard>
-            <GameRouter base="/game"/>
+            <GameRouter base="/game" />
           </GameGuard>
         </Route>
         <Route exact path="/login">
           <LoginGuard>
-            <RouletteWheel/>
+            <RouletteWheel />
           </LoginGuard>
         </Route>
         <Route exact path="/">
-          <Redirect to="/game"/>
+          <Redirect to="/game" />
         </Route>
       </Switch>
     </BrowserRouter>
