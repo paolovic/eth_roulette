@@ -31,7 +31,7 @@ const Game = () => {
   const [users, setUsers] = useState(null);
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('eth_roulette_token');
     history.push('/login');
   }
 
