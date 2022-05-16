@@ -19,13 +19,14 @@ const AppRouter = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/game">
-          <GameGuard>
+          <RouletteWheel />
+          {/* <GameGuard>
             <GameRouter base="/game" />
-          </GameGuard>
+          </GameGuard> */}
         </Route>
         <Route exact path="/login">
           <LoginGuard>
-            <RouletteWheel />
+            <Login />
           </LoginGuard>
         </Route>
         <Route exact path="/">

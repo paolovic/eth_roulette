@@ -1,10 +1,9 @@
 import 'styles/ui/BaseContainer.scss';
 import PropTypes from "prop-types";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
 
 const BaseContainer = props => (
-  <div className='base-container base'>
+  <div className='base-container sidebar'>
     <ProSidebar>
       <Menu iconShape="square">
         <MenuItem>Dashboard</MenuItem>

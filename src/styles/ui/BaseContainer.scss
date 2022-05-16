@@ -1,5 +1,10 @@
 @import 'styles/theme';
 
+$sidebar-bg-color: $background;
+$sidebar-color: $textColor;
+
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
 .base-container {
   margin-left: auto;
   padding-left: 15px;
@@ -8,7 +13,9 @@
   max-width: $DESKTOP_WIDTH;
   color: $textColor;
 
-  &.base {
+  &.sidebar {
+    margin-left: 0px;
+    padding-left: 0px;
     display: flex;
     flex-direction: row;
   }
