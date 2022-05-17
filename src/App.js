@@ -1,5 +1,11 @@
 import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
+import { Web3ReactProvider } from '@web3-react/core'
+import Web3 from 'web3'
+
+function getLibrary(provider) {
+  return new Web3(provider)
+}
 
 /**
  * Happy coding!
@@ -8,10 +14,10 @@ import AppRouter from "components/routing/routers/AppRouter";
  */
 const App = () => {
   return (
-    <div>
-      <Header height="100"/>
-      <AppRouter/>
-    </div>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Header height="100" />
+      <AppRouter />
+    </Web3ReactProvider>
   );
 };
 

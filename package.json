@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
     "axios": "^0.24.0",
     "node-gyp": "^8.4.1",
     "node-sass": "^7.0.1",
-    "react": "^17.0.2",
     "react-custom-roulette": "^1.2.0",
-    "react-dom": "^17.0.2",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^5.3.0",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^4.0.3",
+    "web3": "^1.7.3"
   },
   "scripts": {
     "dev": "react-scripts start",
