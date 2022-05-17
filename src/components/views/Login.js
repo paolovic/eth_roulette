@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import React, { useState } from 'react';
+import { api, handleError } from 'helpers/api';
 import User from 'models/User';
-import {useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
+import { useHistory } from 'react-router-dom';
+import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import { useWeb3React } from "@web3-react/core"
+import { injected } from "../wallet/Connector"
 
 /*
 It is possible to add multiple components inside a single file,
@@ -39,10 +41,31 @@ const Login = props => {
   const history = useHistory();
   const [name, setName] = useState(null);
   const [username, setUsername] = useState(null);
+  const [connected, setConnected] = useState(false);
+  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+
+  const connect = async () => {
+    try {
+      await activate(injected)
+    } catch (ex) {
+      console.log(ex);
+    }
+    console.log(account);
+    if (active) { setConnected(true); }
+  }
+
+  const disconnect = async () => {
+    try {
+      deactivate();
+      setConnected(false);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
 
   const doLogin = async () => {
     try {
-      const requestBody = JSON.stringify({username, name});
+      const requestBody = JSON.stringify({ username, name });
       const response = await api.post('/users', requestBody);
 
       // Get the returned user and update a new object.
@@ -62,7 +85,7 @@ const Login = props => {
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          <FormField
+          {/* <FormField
             label="Username"
             value={username}
             onChange={un => setUsername(un)}
@@ -71,14 +94,23 @@ const Login = props => {
             label="Name"
             value={name}
             onChange={n => setName(n)}
-          />
+          /> */}
           <div className="login button-container">
             <Button
-              disabled={!username || !name}
+              disabled={connected}
               width="100%"
-              onClick={() => doLogin()}
+              onClick={connect}
             >
-              Login
+              Connect to metamask
+            </Button>
+          </div>
+          <div className="login button-container">
+            <Button
+              disabled={!connected}
+              width="100%"
+              onClick={disconnect}
+            >
+              disconnect
             </Button>
           </div>
         </div>

@@ -7,6 +7,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 
+const contractAddress = "0x8a86f335c2926e75E57e67bBA2F504F5704c80f3";
+
 const Player = ({user}) => (
   <div className="player container">
     <div className="player username">{user.username}</div>
