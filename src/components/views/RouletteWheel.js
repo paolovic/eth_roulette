@@ -7,15 +7,18 @@ import wheel from './assets/roulette-wheel.png'
 const RouletteWheel = () => {
     const [state, setState] = useState({ name: "circle" });
 
-    const startRotation = () => {
+    const startRotation = async () => {
         setState({
             name: "circle start-rotate"
         });
-        setTimeout(() => {
+        var startTime = Date.now();
+        await new Promise(() => setTimeout(() => {
             setState({
                 name: "circle start-rotate stop-rotate"
             });
-        }, Math.floor(Math.random() * 10000) + 1);
+        }, 2000));
+        var endTime = Date.now();
+        console.log(endTime - startTime);
     }
 
     return (
