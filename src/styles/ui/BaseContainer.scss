@@ -12,11 +12,11 @@ $sidebar-color: $textColor;
   padding-right: 15px;
   max-width: $DESKTOP_WIDTH;
   color: $textColor;
+  display: flex;
+  flex-direction: row;
 
   &.sidebar {
     margin-left: 0px;
     padding-left: 0px;
-    display: flex;
-    flex-direction: row;
   }
 }

@@ -7,7 +7,7 @@
   for more information visit https://sass-lang.com/guide
  */
 
-.game {
+/* .game {
   &.container {
     background: $background;
     padding: 1.5em;
@@ -29,6 +29,69 @@
   }
   & p,h2 {
     margin: 0.5em 0;
+  }
+} */
+
+@import 'styles/theme';
+
+.game {
+  &.container {
+    margin: 2em;
+    padding: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+  }
+  &.wheel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 80px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    margin: 5em;
+  }
+  &.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40em;
+    height: 40em;
+    font-size: 16px;
+    font-weight: 300;
+    padding-left: 37px;
+    padding-right: 37px;
+    border-radius: 0.75em;
+    background-color: $background;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: $dropShadow;
+  }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.input {
+    height: 35px;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.75em;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: $textColor;
+  }
+  &.label {
+    color: $textColor;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
   }
 }
 
