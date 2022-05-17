@@ -5,17 +5,23 @@ import 'styles/views/RouletteWheel.scss';
 import wheel from './assets/roulette-wheel.png'
 
 const RouletteWheel = () => {
-    const [state, setState] = useState({ name: "circle" });
+    const rotationSpeed = 10000;
+    const [angle, setAngle] = useState(0);
+    const [cssState, setCssState] = useState({ name: "wheel" });
 
-    const startRotation = () => {
-        setState({
-            name: "circle start-rotate"
+    const startRotation = async () => {
+        setCssState({
+            name: "wheel start-rotate"
         });
-        setTimeout(() => {
-            setState({
-                name: "circle start-rotate stop-rotate"
-            });
-        }, Math.floor(Math.random() * 10000) + 1);
+        var startTime = Date.now();
+        await new Promise(r => setTimeout(r, 1000));
+        setCssState({
+            name: "wheel start-rotate stop-rotate"
+        });
+        var endTime = Date.now();
+        var duration = endTime - startTime;
+        setAngle(angle + duration / rotationSpeed * 360);
+        console.log(angle);
     }
 
     return (
@@ -23,7 +29,7 @@ const RouletteWheel = () => {
             <div className="login container">
                 <div className="login form">
                     <div className='arrow'></div>
-                    <img className={state.name} src={wheel} alt="Wheel" />
+                    <img className={cssState.name} src={wheel} alt="Wheel" />
                     <Button className="wheel"
                         onClick={startRotation}>SPIN</Button>
                 </div>

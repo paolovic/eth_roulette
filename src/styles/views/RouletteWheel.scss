@@ -12,16 +12,19 @@
     z-index: 2;
 }
 
-.start-rotate {
-    animation: start-rotate 10s linear infinite reverse;
-}
-
-@keyframes start-rotate {
-    100% {
-        transform: rotate(360deg)
+.wheel{
+    &.start-rotate {
+        animation: start-rotate 10s linear infinite reverse;
+    }
+    
+    @keyframes start-rotate {
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+    
+    &.stop-rotate {
+        animation-play-state: paused;
     }
 }
 
-.stop-rotate {
-    animation-play-state: paused;
-}
