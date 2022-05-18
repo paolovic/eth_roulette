@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import { api, handleError } from 'helpers/api';
-import User from 'models/User';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import { useWeb3React } from "@web3-react/core"
-import { injected } from "../wallet/Connector"
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../wallet/Connector";
+import Web3 from 'web3';
+import balance_abi from "abi/balance_abi.json"
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
 const FormField = props => {
   return (
     <div className="login field">
@@ -37,12 +31,33 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
+const testnet = 'https://rinkeby.etherscan.io/';
+
 const Login = props => {
   const history = useHistory();
-  const [name, setName] = useState(null);
-  const [username, setUsername] = useState(null);
   const [connected, setConnected] = useState(false);
-  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+  const { active, account, library, activate, deactivate } = useWeb3React();
+
+  useEffect(() => {
+    if (active) {
+      setConnected(true);
+      async function fetchData() {
+        try {
+          console.log(`Selected account is ${account}`);
+        }
+        catch (err) {
+          console.log(err);
+          return;
+        }
+      };
+      fetchData();
+      history.push('/game')
+    }
+    else {
+      setConnected(false);
+    }
+
+  }, [active]);
 
   const connect = async () => {
     try {
@@ -50,20 +65,19 @@ const Login = props => {
     } catch (ex) {
       console.log(ex);
     }
-    console.log(account);
-    if (active) { setConnected(true); }
   }
 
   const disconnect = async () => {
     try {
       deactivate();
-      setConnected(false);
     } catch (ex) {
       console.log(ex);
     }
   }
 
-  const doLogin = async () => {
+
+
+  /* const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({ username, name });
       const response = await api.post('/users', requestBody);
@@ -79,7 +93,7 @@ const Login = props => {
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
-  };
+  }; */
 
   return (
     <BaseContainer>

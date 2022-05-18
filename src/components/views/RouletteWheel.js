@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import 'styles/views/RouletteWheel.scss';
 import PropTypes from "prop-types";
 import wheel from './assets/roulette-wheel.png'
+import Web3 from 'web3';
+import roulette_abi from "abi/roulette_abi.json"
+import { useWeb3React } from "@web3-react/core"
 import croupier from 'styles/images/croupier.png'
 
 const anglePerField = 360 / 37;
@@ -11,6 +14,7 @@ const msPerRotation = 10000; //milliseconds per rotation
 const angularVelocity = 360 / msPerRotation; //angle per millisecond
 const fields = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
 const fieldsColors = ["green", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black"];
+const contractAddress = "0x8a86f335c2926e75E57e67bBA2F504F5704c80f3";
 
 const FormField = props => {
     return (
@@ -44,14 +48,27 @@ const RouletteWheel = () => {
     const [betAmount, setBetAmount] = useState(0);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
+    const [amount, setAmount] = useState(10000);
+
+    const { active, account, library, activate, deactivate } = useWeb3React();
+
+    useEffect(() => {
+        async function fetchData() {
+            const web3 = new Web3(library.givenProvider);
+            var balance = await web3.eth.getBalance("0x68c6fbc18aBf99f04989604B2B88A10B58822c9e");
+            console.log(Web3.utils.fromWei(balance));
+        }
+        fetchData();
+    }, []);
 
     const startRotation = async (winningField) => {
+        const web3 = new Web3(library.givenProvider);
+        const contract = new web3.eth.Contract(roulette_abi, contractAddress);
         setCssState({
             name: "wheel start-rotate"
         });
         const startTime = Date.now();
-        //make call to smart contract
-        await new Promise(r => setTimeout(r, 8000));
+        await contract.methods.spinRoulette([19]).send({ from: account, value: amount })
         const endTime = Date.now();
         const duration = endTime - startTime;
         var currentAngle;
