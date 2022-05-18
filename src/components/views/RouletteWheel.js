@@ -35,13 +35,6 @@ const FormField = props => {
     );
 };
 
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.array,
-    onChange: PropTypes.func,
-    type: PropTypes.string
-};
-
 
 const RouletteWheel = () => {
     const [betNumbers, setBetNumbers] = useState([]);
@@ -49,14 +42,15 @@ const RouletteWheel = () => {
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
     const [amount, setAmount] = useState(10000);
+    const [balance, setBalance] = useState(null);
 
     const { active, account, library, activate, deactivate } = useWeb3React();
 
     useEffect(() => {
         async function fetchData() {
             const web3 = new Web3(library.givenProvider);
-            var balance = await web3.eth.getBalance("0x68c6fbc18aBf99f04989604B2B88A10B58822c9e");
-            console.log(Web3.utils.fromWei(balance));
+            let b = await web3.eth.getBalance("0x68c6fbc18aBf99f04989604B2B88A10B58822c9e");
+            setBalance(Web3.utils.fromWei(b));
         }
         fetchData();
     }, []);
@@ -116,6 +110,7 @@ const RouletteWheel = () => {
             </div>
             <div className="game container">
                 <img className="croupier" src={croupier} alt="croupier" />
+                <div className="game balance">Player Balance: {balance} ETH</div>
                 <div className="game form">
                     <div>
                         <h1 className="game title">Place your bets</h1>
