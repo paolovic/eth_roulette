@@ -108,6 +108,7 @@ const RouletteWheel = () => {
 
     const startRotation = async () => {
         startTime.current = Date.now();
+        setHasWon(null);
         setCssState({
             name: "wheel start-rotate"
         });
@@ -119,7 +120,7 @@ const RouletteWheel = () => {
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
-                {hasWon !== null && <div className="game win-message" style={{ color: hasWon ? 'white' : 'red' }}>{hasWon ? 'Congratulations! You have won!' : 'Loser! Your parents were right...'}</div>}
+                {hasWon !== null && <div className="game win-message" style={{ color: hasWon ? 'white' : 'red' }}>{hasWon ? 'Oh wow, even a blind hen...' : 'Loser! Your parents were right...'}</div>}
                 <Button className="wheel button" disabled={betAmount === 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
                     onClick={startRotation}
                 >SPIN</Button>
