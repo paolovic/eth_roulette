@@ -100,6 +100,7 @@ const RouletteWheel = () => {
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
                 <Button className="wheel button"
+                    disabled={betAmount == 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
                     onClick={
                         () => {
                             startRotation(1);
@@ -119,27 +120,39 @@ const RouletteWheel = () => {
                             label="Bet amount"
                             value={betAmount}
                             placeholder="Introduce the bet amount..."
-                            onChange={n => setBetAmount(n)}
+                            onChange={n => {
+                                if (cssState.name != "wheel start-rotate") {
+                                    setBetAmount(n)
+                                }
+                            }
+                            }
                             showUnits={true}
                         >
                         </FormField>
                     </div>
                     <div>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])}>1 to 12</Button>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])}>13 to 24</Button>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36])}>25 to 36</Button>
                     </div>
                     <div>
                         <Button className="game button small"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36])}>EVEN</Button>
                         <Button className="game button small red"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3])}>RED</Button>
                         <Button className="game button small black"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26])}>BLACK</Button>
                         <Button className="game button small"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35])}>ODD</Button>
                     </div>
                     <FormField
@@ -147,7 +160,16 @@ const RouletteWheel = () => {
                         label="Bet numbers"
                         value={betNumbers}
                         placeholder="Introduce a single number or choose an option..."
-                        onChange={n => setBetNumbers([n])}
+                        onChange={n => {
+                            if (cssState.name != "wheel start-rotate") {
+                                if (n != '') {
+                                    setBetNumbers([n])
+                                }
+                                else {
+                                    setBetNumbers([]);
+                                }
+                            }
+                        }}
                         showUnits={false}
                     />
                 </div>
