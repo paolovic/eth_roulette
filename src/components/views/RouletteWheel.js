@@ -47,7 +47,6 @@ const RouletteWheel = () => {
     const [betAmount, setBetAmount] = useState(0);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
-    const [resultArrived, setResultArrived] = useState(false)
 
     const { account, library } = useWeb3React();
 
@@ -65,7 +64,7 @@ const RouletteWheel = () => {
                     alert("error while subscribing to event");
                 }
                 else {
-                    setResultArrived(true);
+                    stopRotation(event);
                 }
                 console.log(event)
             }
@@ -98,20 +97,10 @@ const RouletteWheel = () => {
       
         return new Promise(poll);
       }*/
-
-    const startRotation = async (winningField) => {
-        const startTime = Date.now();
-        setResultArrived(false);
-
-        setCssState({
-            name: "wheel start-rotate"
-        });
-        await contract.methods.spinRoulette(betNumbers).send({ from: account, value: betAmount })
-
-        //await until(_ => resultArrived == true)
-        const endTime = Date.now();
-
-        const duration = startTime - endTime;
+    const stopRotation = async (event) => {
+        var endTime = Date.now();
+        var startTime = parseInt(localStorage.getItem('start'))
+        const duration = endTime - startTime;
 
         var currentAngle;
         setAngle((previousAngle) => {
@@ -122,6 +111,7 @@ const RouletteWheel = () => {
         const currentAngleOffset = currentAngle - currentPosition * anglePerField;
         currentAngle += currentAngleOffset;
 
+        const winningField = parseInt(event.returnValues.result);
         const winningPosition = fields.indexOf(winningField);
         const winningAngle = winningPosition * anglePerField;
         var angleDif = winningAngle - currentAngle;
@@ -141,17 +131,25 @@ const RouletteWheel = () => {
         });
     }
 
+    const startRotation = async () => {
+        localStorage.setItem('start', Date.now().toString());
+        console.log(parseInt(localStorage.getItem('start')));
+        setCssState({
+            name: "wheel start-rotate"
+        });
+        await contract.methods.spinRoulette(betNumbers).send({ from: account, value: betAmount })
+
+        //await until(_ => resultArrived == true)
+    }
+
     return (
         <BaseContainer>
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
                 <Button className="wheel button"
-                    onClick={
-                        () => {
-                            startRotation(1);
-                        }
-                    }>SPIN</Button>
+                    onClick={startRotation}
+                >SPIN</Button>
             </div>
             <div className="game container">
                 <img className="croupier" src={croupier} alt="croupier" />
