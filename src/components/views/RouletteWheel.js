@@ -1,6 +1,6 @@
 import BaseContainer from 'components/ui/BaseContainer';
 import { Button } from 'components/ui/Button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import 'styles/views/RouletteWheel.scss';
 import wheel from './assets/roulette-wheel.png'
 import Web3 from 'web3';
@@ -42,11 +42,14 @@ const RouletteWheel = () => {
     const [cssState, setCssState] = useState({ name: "wheel" });
     const [balance, setBalance] = useState(null);
     const [hasWon, setHasWon] = useState(null);
+    const startTime = useRef();
 
     const { account, library } = useWeb3React();
 
     var web3 = new Web3(library.givenProvider);
     var contract = new web3.eth.Contract(roulette_abi, contractAddress);
+
+
 
     useEffect(() => {
         async function fetchData() {
@@ -81,8 +84,7 @@ const RouletteWheel = () => {
 
     const stopRotation = async (event) => {
         var endTime = Date.now();
-        var startTime = parseInt(localStorage.getItem('start'))
-        const duration = endTime - startTime;
+        const duration = endTime - startTime.current;
 
         var currentAngle;
         setAngle((previousAngle) => {
@@ -112,7 +114,7 @@ const RouletteWheel = () => {
     }
 
     const startRotation = async () => {
-        localStorage.setItem('start', Date.now().toString());
+        startTime.current =  Date.now();
         setCssState({
             name: "wheel start-rotate"
         });
