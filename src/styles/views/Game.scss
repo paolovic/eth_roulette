@@ -64,6 +64,13 @@
         }
     }
 
+    &.win-message {
+        padding-left: 6em;
+        padding-top: 1.5em;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
     &.title {
         padding-top: 1.5em;
         padding-left: 1.5em;
