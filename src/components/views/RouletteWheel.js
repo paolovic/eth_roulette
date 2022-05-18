@@ -56,12 +56,15 @@ const RouletteWheel = () => {
         async function fetchData() {
             contract.events.allEvents({
                 fromBlock: 'latest',
-            }, function (error, event) {
+            }, async function (error, event) {
                 if (error) {
                     alert("error while subscribing to event");
                 }
                 else {
                     stopRotation(event);
+                    setHasWon(event.event==="Win");
+                    let b = await web3.eth.getBalance(account);
+                    setBalance(Web3.utils.fromWei(b));
                 }
                 console.log(event)
             }
@@ -71,17 +74,6 @@ const RouletteWheel = () => {
         }
         fetchData();
     }, []);
-
-/*     useEffect(() => {
-        if (hasWon != null) {
-            if (hasWon) {
-                alert("You have won, your balanced will be updated!");
-            }
-            else {
-                alert("Loser! You are and will be forever a natural born");
-            }
-        }
-    }, [hasWon]); */
 
     const stopRotation = async (event) => {
         var endTime = Date.now();
@@ -115,7 +107,7 @@ const RouletteWheel = () => {
     }
 
     const startRotation = async () => {
-        startTime.current =  Date.now();
+        startTime.current = Date.now();
         setCssState({
             name: "wheel start-rotate"
         });
@@ -127,6 +119,7 @@ const RouletteWheel = () => {
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
+                {hasWon !== null && <div className="game win-message" style={{ color: hasWon ? 'white' : 'red' }}>{hasWon ? 'Congratulations! You have won!' : 'Loser! Your parents were right...'}</div>}
                 <Button className="wheel button" disabled={betAmount === 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
                     onClick={startRotation}
                 >SPIN</Button>
