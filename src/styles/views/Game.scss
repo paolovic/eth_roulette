@@ -1,7 +1,28 @@
 @import 'styles/theme';
 
+a {
+    color: #FFF;
+}
+
+a:hover {
+    color: #00F
+}
+
 .game {
     font-family: 'Times New Roman';
+
+
+    &.linkback {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.3em;
+        font-weight: 700;
+
+        &.linkback:after {
+            content: "  \279C";
+        }
+    }
 
     &.amount {
         color: white;

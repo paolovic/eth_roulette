@@ -1,5 +1,6 @@
 import BaseContainer from 'components/ui/BaseContainer';
 import { Button } from 'components/ui/Button';
+import { useHistory, Link } from 'react-router-dom';
 import React, { useEffect, useState, useRef } from 'react';
 import 'styles/views/RouletteWheel.scss';
 import wheel from './assets/roulette-wheel.png'
@@ -28,7 +29,7 @@ const FormField = props => {
                 onChange={e => props.onChange(e.target.value)}
             />
             {
-                props.showUnits ? <span className="game units">ETH</span> : null
+                props.showUnits ? <span className="game units">Wei</span> : null
             }
         </div>
     );
@@ -49,7 +50,7 @@ const RouletteWheel = () => {
     var web3 = new Web3(library.givenProvider);
     var contract = new web3.eth.Contract(roulette_abi, contractAddress);
 
-
+    const history = useHistory();
 
     useEffect(() => {
         async function fetchData() {
@@ -131,6 +132,7 @@ const RouletteWheel = () => {
                 >SPIN</Button>
             </div>
             <div className="game container">
+                <div className="game linkback"><Link style={{ textDecoration: 'none' }}  to={`/login`}>Go back</Link></div>
                 <img className="croupier" src={croupier} alt="croupier" />
                 <div className="game balance">Player Balance: {balance} ETH</div>
                 <div className="game form">
