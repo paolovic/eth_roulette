@@ -60,8 +60,8 @@ const RouletteWheel = () => {
 
     const startRotation = async (winningField) => {
         const web3 = new Web3(library.givenProvider);
-        const contract = new web3.eth.Contract(roulette_abi, contractAddress, { from: account, gas: 3, value: 1000000000 });
-        await contract.methods.spinRoulette([5]).call()
+        const contract = new web3.eth.Contract(roulette_abi, contractAddress);
+        await contract.methods.spinRoulette([19]).send({ from: account, value: 10000, gas: 100000 })
         setCssState({
             name: "wheel start-rotate"
         });
