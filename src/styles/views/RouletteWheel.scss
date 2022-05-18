@@ -1,27 +1,54 @@
 @import 'styles/theme';
 
-.arrow {
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 50px solid $background;
+.croupier {
     position: absolute;
-    left: 50%;
-    top: 70px;
-    z-index: 2;
+    left: 630px;
+    top: 10px;
+    width: 520px;
+    height: 380px;
 }
 
-.start-rotate {
-    animation: start-rotate 10s linear infinite reverse;
-}
+.wheel {
+    &.container {
+        background-color: #1a1a1e;
+        border-radius: $borderRadius;
+        box-shadow: $dropShadow;
+        margin-right: 5em;
+        margin-left: 2em;
+        background-image: url(/styles/images/tapete.PNG);
+    }
 
-@keyframes start-rotate {
-    100% {
-        transform: rotate(360deg)
+    &.button {
+        width: 30em;
+        height: 5em;
+        font-family: 'Times New Roman';
+        color: white;
+    }
+
+    &.arrow {
+        position: relative;
+        border-radius: $borderRadius;
+        left: 47.5%;
+        top: 1%;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 50px solid black;
+    }
+
+    &.start-rotate {
+        animation: start-rotate 10s linear infinite reverse;
+    }
+
+    @keyframes start-rotate {
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+
+    &.stop-rotate {
+        animation-play-state: paused;
     }
 }
 
-.stop-rotate {
-    animation-play-state: paused;
-}

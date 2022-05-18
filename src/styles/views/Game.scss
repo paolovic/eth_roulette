@@ -1,59 +1,132 @@
 @import 'styles/theme';
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
-
-  for more information visit https://sass-lang.com/guide
- */
-
-.game {
-  &.container {
-    background: $background;
-    padding: 1.5em;
-    border-radius: $borderRadius;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: $dropShadow;
-  }
-  &.user-list {
-    list-style: none;
-    padding-left: 0;
-  }
-  &.user-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  & p,h2 {
-    margin: 0.5em 0;
-  }
+a {
+    color: #FFF;
 }
 
-.player {
-  &.container {
-    margin: 0.5em 0;
-    width: 20em;
-    padding: 10px;
-    border-radius: $borderRadius;
-    display: flex;
-    align-items: center;
-    background: lighten($background, 5);
-  }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
-  }
-  &.username {
-    font-weight: 500;
-    color: $accent;
-  }
-  &.id {
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: $fontMono;
-    font-weight: 300;
-  }
+a:hover {
+    color: #00F
+}
+
+.game {
+    font-family: 'Times New Roman';
+
+
+    &.linkback {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 1.3em;
+        font-weight: 700;
+
+        &.linkback:after {
+            content: "  \279C";
+        }
+    }
+
+    &.amount {
+        color: white;
+        height: 35px;
+        width: 15em;
+        margin-left: 2em;
+        padding-left: 1em;
+        border: none;
+        border-radius: 0.75em;
+        background: transparentize(white, 0.75);
+    }
+
+    &.balance {
+        background-color: black;
+        margin: 2em;
+        color: white;
+        width: 21.5em;
+        height: 3em;
+        border-radius: 0.75em;
+        background: transparentize(black, 0.25);
+        text-align: center;
+        padding: 1em;
+        position: absolute;
+        left: 815px;
+        top: 60px;
+    }
+
+    &.units {
+        padding-left: 0.5em;
+    }
+
+    &.container {
+        padding: 1.0em;
+    }
+
+    &.button {
+        color: white;
+        font-size: 13px;
+
+        &.big {
+            margin: 4.5em;
+            width: 6em;
+            height: 5em;
+            margin-bottom: 2em;
+        }
+
+        &.small {
+            margin: 2.7em;
+            margin-bottom: 1em;
+            width: 6em;
+            height: 5em;
+
+            &.red {
+                background-color: darkred;
+            }
+
+            &.black {
+                background-color: black;
+            }
+        }
+    }
+
+    &.win-message {
+        padding-left: 6em;
+        padding-top: 1.5em;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    &.title {
+        padding-top: 1.5em;
+        padding-left: 1.5em;
+    }
+
+    &.form {
+        position: relative;
+        width: 40em;
+        height: 35em;
+        left: -10%;
+        bottom: -26%;
+        font-size: 15px;
+        border-radius: 0.75em;
+        background-color: $background;
+        box-shadow: $dropShadow;
+        background-image: url(/styles/images/tapete.PNG);
+    }
+
+    &.field {
+        margin-top: 3em;
+        margin-left: 3em;
+
+        ::placeholder {
+            color: white;
+        }
+    }
+
+    &.input {
+        color: white;
+        height: 35px;
+        width: 22.4em;
+        border: none;
+        border-radius: 0.75em;
+        margin-left: 2em;
+        padding-left: 1em;
+        background: transparentize(white, 0.75);
+    }
 }

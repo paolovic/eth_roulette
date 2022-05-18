@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import { api, handleError } from 'helpers/api';
-import User from 'models/User';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import { useWeb3React } from "@web3-react/core"
-import { injected } from "../wallet/Connector"
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../wallet/Connector";
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
 const FormField = props => {
   return (
     <div className="login field">
@@ -39,62 +31,48 @@ FormField.propTypes = {
 
 const Login = props => {
   const history = useHistory();
-  const [name, setName] = useState(null);
-  const [username, setUsername] = useState(null);
   const [connected, setConnected] = useState(false);
-  const { active, account, library, connector, activate, deactivate } = useWeb3React();
+  const { activate, deactivate } = useWeb3React();
+
+  useEffect(() => {
+    const connectWalletOnPageLoad = async () => {
+      if (parseInt(localStorage?.getItem('isWalletConnected')) === 1) {
+        try {
+          setConnected(true)
+          await activate(injected)
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
+    }
+    connectWalletOnPageLoad()
+  }, [])
 
   const connect = async () => {
     try {
-      await activate(injected)
+      await activate(injected);
+      setConnected(true);
+      localStorage.setItem('isWalletConnected', 1);
+      history.push('/game')
     } catch (ex) {
       console.log(ex);
     }
-    console.log(account);
-    if (active) { setConnected(true); }
   }
 
   const disconnect = async () => {
     try {
       deactivate();
       setConnected(false);
+      localStorage.setItem('isWalletConnected', 0);
     } catch (ex) {
       console.log(ex);
     }
   }
 
-  const doLogin = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, name });
-      const response = await api.post('/users', requestBody);
-
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
-
-      // Store the token into the local storage.
-      localStorage.setItem('eth_roulette_token', user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
-    }
-  };
-
   return (
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          {/* <FormField
-            label="Username"
-            value={username}
-            onChange={un => setUsername(un)}
-          />
-          <FormField
-            label="Name"
-            value={name}
-            onChange={n => setName(n)}
-          /> */}
           <div className="login button-container">
             <Button
               disabled={connected}

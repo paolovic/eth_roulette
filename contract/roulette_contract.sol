@@ -69,7 +69,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2 {
           // transfer  
           betRecord[id].playerAddress.transfer(payout);
           emit Win(betRecord[id], spinResult);
-          break;
+          return;
       } 
     }
     emit Lose(betRecord[id], spinResult);

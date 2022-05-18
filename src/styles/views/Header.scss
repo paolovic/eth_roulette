@@ -1,13 +1,16 @@
 @import 'styles/theme';
 
 .header {
-  &.container {
-    @include center;
-  }
+    &.container {
+        @include center;
+        justify-content: right;
+    }
 
-  &.title {
-    font-weight: bold;
-    color: $background;
-    text-align: center;
-  }
+    &.title {
+        font-weight: bold;
+        font-size: 30px;
+        color: $background;
+        text-align: center;
+        font-family: 'Times New Roman';
+    }
 }
