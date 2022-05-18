@@ -2,12 +2,12 @@ import BaseContainer from 'components/ui/BaseContainer';
 import { Button } from 'components/ui/Button';
 import React, { useEffect, useState } from 'react';
 import 'styles/views/RouletteWheel.scss';
-import PropTypes from "prop-types";
 import wheel from './assets/roulette-wheel.png'
 import Web3 from 'web3';
 import roulette_abi from "abi/roulette_abi.json"
 import { useWeb3React } from "@web3-react/core"
 import croupier from 'styles/images/croupier.png'
+import "styles/views/Game.scss";
 
 const anglePerField = 360 / 37;
 const msPerRotation = 10000; //milliseconds per rotation
@@ -40,8 +40,8 @@ const RouletteWheel = () => {
     const [betAmount, setBetAmount] = useState(0);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
-    const [amount, setAmount] = useState(10000);
     const [balance, setBalance] = useState(null);
+    const [hasWon, setHasWon] = useState(null);
 
     const { account, library } = useWeb3React();
 
@@ -68,11 +68,16 @@ const RouletteWheel = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        if (cssState.name === "wheel start-rotate stop-rotate") {
-
+/*     useEffect(() => {
+        if (hasWon != null) {
+            if (hasWon) {
+                alert("You have won, your balanced will be updated!");
+            }
+            else {
+                alert("Loser! You are and will be forever a natural born");
+            }
         }
-    }, [cssState.name]);
+    }, [hasWon]); */
 
     const stopRotation = async (event) => {
         var endTime = Date.now();
@@ -108,7 +113,6 @@ const RouletteWheel = () => {
 
     const startRotation = async () => {
         localStorage.setItem('start', Date.now().toString());
-        console.log(parseInt(localStorage.getItem('start')));
         setCssState({
             name: "wheel start-rotate"
         });
@@ -120,7 +124,7 @@ const RouletteWheel = () => {
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
-                <Button className="wheel button" disabled={betAmount == 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
+                <Button className="wheel button" disabled={betAmount === 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
                     onClick={startRotation}
                 >SPIN</Button>
             </div>
@@ -136,7 +140,7 @@ const RouletteWheel = () => {
                             value={betAmount}
                             placeholder="Introduce the bet amount..."
                             onChange={n => {
-                                if (cssState.name != "wheel start-rotate") {
+                                if (cssState.name !== "wheel start-rotate") {
                                     setBetAmount(n)
                                 }
                             }
@@ -176,8 +180,8 @@ const RouletteWheel = () => {
                         value={betNumbers}
                         placeholder="Introduce a single number or choose an option..."
                         onChange={n => {
-                            if (cssState.name != "wheel start-rotate") {
-                                if (n != '') {
+                            if (cssState.name !== "wheel start-rotate") {
+                                if (n !== '') {
                                     setBetNumbers([n])
                                 }
                                 else {

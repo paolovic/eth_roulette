@@ -32,22 +32,28 @@ FormField.propTypes = {
 const Login = props => {
   const history = useHistory();
   const [connected, setConnected] = useState(false);
-  const { active, activate, deactivate } = useWeb3React();
+  const { activate, deactivate } = useWeb3React();
 
   useEffect(() => {
-    if (active) {
-      setConnected(true);
-      history.push('/game')
+    const connectWalletOnPageLoad = async () => {
+      if (parseInt(localStorage?.getItem('isWalletConnected')) === 1) {
+        try {
+          setConnected(true)
+          await activate(injected)
+        } catch (ex) {
+          console.log(ex)
+        }
+      }
     }
-    else {
-      setConnected(false);
-    }
-
-  }, [active]);
+    connectWalletOnPageLoad()
+  }, [])
 
   const connect = async () => {
     try {
-      await activate(injected)
+      await activate(injected);
+      setConnected(true);
+      localStorage.setItem('isWalletConnected', 1);
+      history.push('/game')
     } catch (ex) {
       console.log(ex);
     }
@@ -56,45 +62,17 @@ const Login = props => {
   const disconnect = async () => {
     try {
       deactivate();
+      setConnected(false);
+      localStorage.setItem('isWalletConnected', 0);
     } catch (ex) {
       console.log(ex);
     }
   }
 
-
-
-  /* const doLogin = async () => {
-    try {
-      const requestBody = JSON.stringify({ username, name });
-      const response = await api.post('/users', requestBody);
-
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
-
-      // Store the token into the local storage.
-      localStorage.setItem('eth_roulette_token', user.token);
-
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/game`);
-    } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
-    }
-  }; */
-
   return (
     <BaseContainer>
       <div className="login container">
         <div className="login form">
-          {/* <FormField
-            label="Username"
-            value={username}
-            onChange={un => setUsername(un)}
-          />
-          <FormField
-            label="Name"
-            value={name}
-            onChange={n => setName(n)}
-          /> */}
           <div className="login button-container">
             <Button
               disabled={connected}

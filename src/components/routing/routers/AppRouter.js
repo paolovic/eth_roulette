@@ -1,7 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { GameGuard } from "components/routing/routeProtectors/GameGuard";
-import GameRouter from "components/routing/routers/GameRouter";
-import { LoginGuard } from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import RouletteWheel from "components/views/RouletteWheel";
 
@@ -19,18 +17,15 @@ const AppRouter = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/game">
-          <RouletteWheel />
-          {/* <GameGuard>
-            <GameRouter base="/game" />
-          </GameGuard> */}
+          <GameGuard>
+            <RouletteWheel />
+          </GameGuard>
         </Route>
         <Route exact path="/login">
-          <LoginGuard>
             <Login />
-          </LoginGuard>
         </Route>
         <Route exact path="/">
-          <Redirect to="/game" />
+          <Redirect to="/login" />
         </Route>
       </Switch>
     </BrowserRouter>
