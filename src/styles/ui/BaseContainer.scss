@@ -6,17 +6,8 @@ $sidebar-color: $textColor;
 @import '~react-pro-sidebar/dist/scss/styles.scss';
 
 .base-container {
-  margin-left: auto;
-  padding-left: 15px;
-  margin-right: auto;
-  padding-right: 15px;
-  max-width: $DESKTOP_WIDTH;
-  color: $textColor;
-  display: flex;
-  flex-direction: row;
-
-  &.sidebar {
-    margin-left: 0px;
-    padding-left: 0px;
-  }
+    max-width: $DESKTOP_WIDTH;
+    color: $textColor;
+    display: flex;
+    flex-direction: row;
 }
