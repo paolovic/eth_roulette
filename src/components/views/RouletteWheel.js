@@ -13,8 +13,7 @@ const anglePerField = 360 / 37;
 const msPerRotation = 10000; //milliseconds per rotation
 const angularVelocity = 360 / msPerRotation; //angle per millisecond
 const fields = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
-const fieldsColors = ["green", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black", "red", "black"];
-const contractAddress = "0x8a86f335c2926e75E57e67bBA2F504F5704c80f3";
+const contractAddress = "0x666209CD9248D5D9E6fb55cB14e06B0ED9d724f8";
 
 const FormField = props => {
     return (
@@ -44,27 +43,42 @@ const RouletteWheel = () => {
     const [amount, setAmount] = useState(10000);
     const [balance, setBalance] = useState(null);
 
-    const { active, account, library, activate, deactivate } = useWeb3React();
+    const { account, library } = useWeb3React();
+
+    var web3 = new Web3(library.givenProvider);
+    var contract = new web3.eth.Contract(roulette_abi, contractAddress);
 
     useEffect(() => {
         async function fetchData() {
-            const web3 = new Web3(library.givenProvider);
-            let b = await web3.eth.getBalance("0x68c6fbc18aBf99f04989604B2B88A10B58822c9e");
+            contract.events.allEvents({
+                fromBlock: 'latest',
+            }, function (error, event) {
+                if (error) {
+                    alert("error while subscribing to event");
+                }
+                else {
+                    stopRotation(event);
+                }
+                console.log(event)
+            }
+            )
+            let b = await web3.eth.getBalance(account);
             setBalance(Web3.utils.fromWei(b));
         }
         fetchData();
     }, []);
 
-    const startRotation = async (winningField) => {
-        const web3 = new Web3(library.givenProvider);
-        const contract = new web3.eth.Contract(roulette_abi, contractAddress);
-        setCssState({
-            name: "wheel start-rotate"
-        });
-        const startTime = Date.now();
-        await contract.methods.spinRoulette([19]).send({ from: account, value: amount })
-        const endTime = Date.now();
+    useEffect(() => {
+        if (cssState.name === "wheel start-rotate stop-rotate") {
+
+        }
+    }, [cssState.name]);
+
+    const stopRotation = async (event) => {
+        var endTime = Date.now();
+        var startTime = parseInt(localStorage.getItem('start'))
         const duration = endTime - startTime;
+
         var currentAngle;
         setAngle((previousAngle) => {
             currentAngle = (previousAngle + duration * angularVelocity) % 360;
@@ -74,17 +88,15 @@ const RouletteWheel = () => {
         const currentAngleOffset = currentAngle - currentPosition * anglePerField;
         currentAngle += currentAngleOffset;
 
+        const winningField = parseInt(event.returnValues.result);
         const winningPosition = fields.indexOf(winningField);
         const winningAngle = winningPosition * anglePerField;
         var angleDif = winningAngle - currentAngle;
         if (winningAngle < currentAngle) {
             angleDif += 360
         }
-        //console.log(winningAngle)
-        //setAngle(winningAngle);
         setAngle((previousAngle) => {
             var currentAngle2 = (previousAngle + angleDif) % 360;
-            //console.log(currentAngle2)
             return currentAngle2;
         });
         var rotationDuration = (angleDif / angularVelocity) + 230;
@@ -94,20 +106,23 @@ const RouletteWheel = () => {
         });
     }
 
+    const startRotation = async () => {
+        localStorage.setItem('start', Date.now().toString());
+        console.log(parseInt(localStorage.getItem('start')));
+        setCssState({
+            name: "wheel start-rotate"
+        });
+        await contract.methods.spinRoulette(betNumbers).send({ from: account, value: betAmount })
+    }
+
     return (
         <BaseContainer>
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
-                <Button className="wheel button"
-                    disabled={betAmount == 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
-                    onClick={
-                        () => {
-                            startRotation(1);
-                            console.log(betNumbers);
-                            console.log(betAmount);
-                        }
-                    }>SPIN</Button>
+                <Button className="wheel button" disabled={betAmount == 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
+                    onClick={startRotation}
+                >SPIN</Button>
             </div>
             <div className="game container">
                 <img className="croupier" src={croupier} alt="croupier" />

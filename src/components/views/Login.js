@@ -6,8 +6,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "../wallet/Connector";
-import Web3 from 'web3';
-import balance_abi from "abi/balance_abi.json"
 
 const FormField = props => {
   return (
@@ -31,26 +29,14 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
-const testnet = 'https://rinkeby.etherscan.io/';
-
 const Login = props => {
   const history = useHistory();
   const [connected, setConnected] = useState(false);
-  const { active, account, library, activate, deactivate } = useWeb3React();
+  const { active, activate, deactivate } = useWeb3React();
 
   useEffect(() => {
     if (active) {
       setConnected(true);
-      async function fetchData() {
-        try {
-          console.log(`Selected account is ${account}`);
-        }
-        catch (err) {
-          console.log(err);
-          return;
-        }
-      };
-      fetchData();
       history.push('/game')
     }
     else {
