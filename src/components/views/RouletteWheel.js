@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import 'styles/views/RouletteWheel.scss';
 import PropTypes from "prop-types";
 import wheel from './assets/roulette-wheel.png'
+import croupier from 'styles/images/croupier.png'
 
 const anglePerField = 360 / 37;
 const msPerRotation = 10000; //milliseconds per rotation
@@ -19,7 +20,7 @@ const FormField = props => {
             </label>
             <input
                 className="game input"
-                placeholder="enter here.."
+                placeholder={props.placeholder}
                 value={props.value}
                 onChange={e => props.onChange(e.target.value)}
             />
@@ -29,28 +30,16 @@ const FormField = props => {
 
 FormField.propTypes = {
     label: PropTypes.string,
-    value: PropTypes.number,
+    value: PropTypes.array,
     onChange: PropTypes.func,
-    type: PropTypes.string,
-    min: PropTypes.number
+    type: PropTypes.string
 };
 
 
 const RouletteWheel = () => {
-    const [betOnRed, setBetOnRed] = useState(0)
-    const [betOnBlack, setBetOnBlack] = useState(0)
-    const [betOnOdd, setBetOnOdd] = useState(0)
-    const [betOnEven, setBetOnEven] = useState(0)
-    const [betOn1To12, setBetOn1To12] = useState(0)
-    const [betOn13To24, setBetOn13To24] = useState(0)
-    const [betOn25To36, setBetOn25To36] = useState(0)
-    const [betOnNumber, setBetOnNumber] = useState(0)
+    const [betNumbers, setBetNumbers] = useState([]);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
-
-    /* useEffect(() => {
-        console.log(angle);
-    }, [angle]); */
 
     const startRotation = async (winningField) => {
         setCssState({
@@ -58,7 +47,7 @@ const RouletteWheel = () => {
         });
         const startTime = Date.now();
         //make call to smart contract
-        await new Promise(r => setTimeout(r, 2534));
+        await new Promise(r => setTimeout(r, 8000));
         const endTime = Date.now();
         const duration = endTime - startTime;
         var currentAngle;
@@ -83,7 +72,7 @@ const RouletteWheel = () => {
             //console.log(currentAngle2)
             return currentAngle2;
         });
-        var rotationDuration = angleDif / angularVelocity;
+        var rotationDuration = (angleDif / angularVelocity) + 230;
         await new Promise(r => setTimeout(r, rotationDuration));
         setCssState({
             name: "wheel start-rotate stop-rotate"
@@ -92,64 +81,44 @@ const RouletteWheel = () => {
 
     return (
         <BaseContainer>
-            <div className="game container">
-                <div className="game form">
-                    <div className='arrow'></div>
-                    <img className={cssState.name} src={wheel} alt="Wheel" />
-                    <Button className="wheel"
-                        onClick={() => startRotation(19)}>SPIN</Button>
-                </div>
+            <div className="wheel container">
+                <div className="wheel arrow"></div>
+                <img className={cssState.name} src={wheel} alt="Wheel" />
+                <Button className="wheel button"
+                    onClick={
+                        () => {
+                            startRotation(1);
+                            console.log(betNumbers);
+                        }
+                    }>SPIN</Button>
             </div>
             <div className="game container">
+                <img className="croupier" src={croupier} alt="croupier" />
                 <div className="game form">
-                    <h1>Place your bets</h1>
+                    <h1 className="game title">Place your bets</h1>
+                    <div>
+                        <Button className="game button big"
+                            onClick={() => setBetNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])}>1 to 12</Button>
+                        <Button className="game button big"
+                            onClick={() => setBetNumbers([13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])}>13 to 24</Button>
+                        <Button className="game button big"
+                            onClick={() => setBetNumbers([25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36])}>25 to 36</Button>
+                    </div>
+                    <div>
+                        <Button className="game button small"
+                            onClick={() => setBetNumbers([2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36])}>EVEN</Button>
+                        <Button className="game button small red"
+                            onClick={() => setBetNumbers([32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3])}>RED</Button>
+                        <Button className="game button small black"
+                            onClick={() => setBetNumbers([15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26])}>BLACK</Button>
+                        <Button className="game button small"
+                            onClick={() => setBetNumbers([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35])}>ODD</Button>
+                    </div>
                     <FormField
-                        label="Red"
-                        value={betOnRed}
-                        onChange={un => setBetOnRed(un)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="black"
-                        value={betOnBlack}
-                        onChange={n => setBetOnBlack(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="odd"
-                        value={betOnOdd}
-                        onChange={n => setBetOnOdd(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="even"
-                        value={betOnEven}
-                        onChange={n => setBetOnEven(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="1-12"
-                        value={betOn1To12}
-                        onChange={n => setBetOn1To12(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="13-24"
-                        value={betOn13To24}
-                        onChange={n => setBetOn13To24(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="25-36"
-                        value={betOn25To36}
-                        onChange={n => setBetOn25To36(n)}
-                        type="number" min={0}
-                    />
-                    <FormField
-                        label="Specific number"
-                        value={betOnNumber}
-                        onChange={n => setBetOnNumber(n)}
-                        type="number" min={0}
+                        label="Bet numbers"
+                        value={betNumbers}
+                        placeholder="Introduce a single number or choose an option..."
+                        onChange={n => setBetNumbers([n])}
                     />
                 </div>
             </div>
