@@ -3,8 +3,23 @@
 .game {
     font-family: 'Times New Roman';
 
+    &.amount {
+        color: white;
+        height: 35px;
+        width: 15em;
+        margin-left: 2em;
+        padding-left: 1em;
+        border: none;
+        border-radius: 0.75em;
+        background: transparentize(white, 0.75);
+    }
+
+    &.units{
+        padding-left: 0.5em;
+    }
+
     &.container {
-        padding: 2.5em;
+        padding: 1.0em;
     }
 
     &.button {
@@ -20,6 +35,7 @@
 
         &.small {
             margin: 2.7em;
+            margin-bottom: 1em;
             width: 6em;
             height: 5em;
 
@@ -63,10 +79,10 @@
     &.input {
         color: white;
         height: 35px;
-        width: 32.4em;
+        width: 22.4em;
         border: none;
         border-radius: 0.75em;
-        margin: 1em;
+        margin-left: 2em;
         padding-left: 1em;
         background: transparentize(white, 0.75);
     }

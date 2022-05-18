@@ -19,11 +19,14 @@ const FormField = props => {
                 {props.label}
             </label>
             <input
-                className="game input"
+                className={props.className}
                 placeholder={props.placeholder}
                 value={props.value}
                 onChange={e => props.onChange(e.target.value)}
             />
+            {
+                props.showUnits ? <span className="game units">ETH</span> : null
+            }
         </div>
     );
 };
@@ -38,6 +41,7 @@ FormField.propTypes = {
 
 const RouletteWheel = () => {
     const [betNumbers, setBetNumbers] = useState([]);
+    const [betAmount, setBetAmount] = useState(0);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
 
@@ -89,13 +93,25 @@ const RouletteWheel = () => {
                         () => {
                             startRotation(1);
                             console.log(betNumbers);
+                            console.log(betAmount);
                         }
                     }>SPIN</Button>
             </div>
             <div className="game container">
                 <img className="croupier" src={croupier} alt="croupier" />
                 <div className="game form">
-                    <h1 className="game title">Place your bets</h1>
+                    <div>
+                        <h1 className="game title">Place your bets</h1>
+                        <FormField
+                            className="game amount"
+                            label="Bet amount"
+                            value={betAmount}
+                            placeholder="Introduce the bet amount..."
+                            onChange={n => setBetAmount(n)}
+                            showUnits={true}
+                        >
+                        </FormField>
+                    </div>
                     <div>
                         <Button className="game button big"
                             onClick={() => setBetNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])}>1 to 12</Button>
@@ -115,10 +131,12 @@ const RouletteWheel = () => {
                             onClick={() => setBetNumbers([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35])}>ODD</Button>
                     </div>
                     <FormField
+                        className="game input"
                         label="Bet numbers"
                         value={betNumbers}
                         placeholder="Introduce a single number or choose an option..."
                         onChange={n => setBetNumbers([n])}
+                        showUnits={false}
                     />
                 </div>
             </div>

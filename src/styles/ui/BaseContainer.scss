@@ -10,9 +10,4 @@ $sidebar-color: $textColor;
     color: $textColor;
     display: flex;
     flex-direction: row;
-
-    &.sidebar {
-        margin-left: 0px;
-        padding-left: 0px;
-    }
 }

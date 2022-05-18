@@ -3,6 +3,8 @@
 .header {
     &.container {
         @include center;
+        justify-content: right;
+        margin-right: 3em;
     }
 
     &.title {
@@ -10,8 +12,6 @@
         font-size: 30px;
         color: $background;
         text-align: center;
-        padding-bottom: 1em;
-        padding-top: 1em;
         font-family: 'Times New Roman';
     }
 }
