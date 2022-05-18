@@ -51,23 +51,28 @@ const RouletteWheel = () => {
     const [betOnNumber, setBetOnNumber] = useState(0)
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
+    const [amount, setAmount] = useState(10000);
 
     const { active, account, library, activate, deactivate } = useWeb3React();
 
-    /* useEffect(() => {
-        console.log(angle);
-    }, [angle]); */
+    useEffect(() => {
+        async function fetchData() {
+            const web3 = new Web3(library.givenProvider);
+            var balance = await web3.eth.getBalance("0x68c6fbc18aBf99f04989604B2B88A10B58822c9e");
+            console.log(Web3.utils.fromWei(balance));
+        }
+        fetchData();
+    }, []);
 
     const startRotation = async (winningField) => {
         const web3 = new Web3(library.givenProvider);
         const contract = new web3.eth.Contract(roulette_abi, contractAddress);
-        await contract.methods.spinRoulette([19]).send({ from: account, value: 10000, gas: 100000 })
         setCssState({
             name: "wheel start-rotate"
         });
         const startTime = Date.now();
         //make call to smart contract
-        await new Promise(r => setTimeout(r, 2534));
+        await contract.methods.spinRoulette([19]).send({ from: account, value: amount })
         const endTime = Date.now();
         const duration = endTime - startTime;
         var currentAngle;

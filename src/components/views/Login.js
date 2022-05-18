@@ -4,8 +4,10 @@ import { Button } from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import { useWeb3React } from "@web3-react/core"
-import { injected } from "../wallet/Connector"
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "../wallet/Connector";
+import Web3 from 'web3';
+import balance_abi from "abi/balance_abi.json"
 
 const FormField = props => {
   return (
@@ -29,10 +31,12 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
+const testnet = 'https://rinkeby.etherscan.io/';
+
 const Login = props => {
   const history = useHistory();
   const [connected, setConnected] = useState(false);
-  const { active, account, activate, deactivate } = useWeb3React();
+  const { active, account, library, activate, deactivate } = useWeb3React();
 
   useEffect(() => {
     if (active) {
