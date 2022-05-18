@@ -14,7 +14,22 @@
         background: transparentize(white, 0.75);
     }
 
-    &.units{
+    &.balance {
+        background-color: black;
+        margin: 2em;
+        color: white;
+        width: 21.5em;
+        height: 3em;
+        border-radius: 0.75em;
+        background: transparentize(black, 0.25);
+        text-align: center;
+        padding: 1em;
+        position: absolute;
+        left: 815px;
+        top: 60px;
+    }
+
+    &.units {
         padding-left: 0.5em;
     }
 

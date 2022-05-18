@@ -34,19 +34,14 @@ const FormField = props => {
     );
 };
 
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.array,
-    onChange: PropTypes.func,
-    type: PropTypes.string
-};
-
 
 const RouletteWheel = () => {
     const [betNumbers, setBetNumbers] = useState([]);
     const [betAmount, setBetAmount] = useState(0);
     const [angle, setAngle] = useState(0);
     const [cssState, setCssState] = useState({ name: "wheel" });
+    const [amount, setAmount] = useState(10000);
+    const [balance, setBalance] = useState(null);
 
     const { account, library } = useWeb3React();
 
@@ -55,8 +50,6 @@ const RouletteWheel = () => {
 
     useEffect(() => {
         async function fetchData() {
-            let b = await web3.eth.getBalance(account);
-            //console.log(Web3.utils.fromWei(b));
             contract.events.allEvents({
                 fromBlock: 'latest',
             }, function (error, event) {
@@ -69,6 +62,8 @@ const RouletteWheel = () => {
                 console.log(event)
             }
             )
+            let b = await web3.eth.getBalance(account);
+            setBalance(Web3.utils.fromWei(b));
         }
         fetchData();
     }, []);
@@ -79,24 +74,6 @@ const RouletteWheel = () => {
         }
     }, [cssState.name]);
 
-    /*useEffect(() => {
-        if (!resultArrived) {
-            resultStart = Date.now();
-        }
-        else {
-            resultEnd = Date.now();
-        }
-    }, [resultArrived]);*/
-
-    /*function until(conditionFunction) {
-
-        const poll = resolve => {
-          if(conditionFunction()) resolve();
-          else setTimeout(_ => poll(resolve), 400);
-        }
-      
-        return new Promise(poll);
-      }*/
     const stopRotation = async (event) => {
         var endTime = Date.now();
         var startTime = parseInt(localStorage.getItem('start'))
@@ -118,10 +95,8 @@ const RouletteWheel = () => {
         if (winningAngle < currentAngle) {
             angleDif += 360
         }
-        //console.log(winningAngle)
         setAngle((previousAngle) => {
             var currentAngle2 = (previousAngle + angleDif) % 360;
-            //console.log(currentAngle2)
             return currentAngle2;
         });
         var rotationDuration = (angleDif / angularVelocity) + 230;
@@ -138,8 +113,6 @@ const RouletteWheel = () => {
             name: "wheel start-rotate"
         });
         await contract.methods.spinRoulette(betNumbers).send({ from: account, value: betAmount })
-
-        //await until(_ => resultArrived == true)
     }
 
     return (
@@ -147,12 +120,13 @@ const RouletteWheel = () => {
             <div className="wheel container">
                 <div className="wheel arrow"></div>
                 <img className={cssState.name} src={wheel} alt="Wheel" />
-                <Button className="wheel button"
+                <Button className="wheel button" disabled={betAmount == 0 || betNumbers.length === 0 || cssState.name === "wheel start-rotate"}
                     onClick={startRotation}
                 >SPIN</Button>
             </div>
             <div className="game container">
                 <img className="croupier" src={croupier} alt="croupier" />
+                <div className="game balance">Player Balance: {balance} ETH</div>
                 <div className="game form">
                     <div>
                         <h1 className="game title">Place your bets</h1>
@@ -161,27 +135,39 @@ const RouletteWheel = () => {
                             label="Bet amount"
                             value={betAmount}
                             placeholder="Introduce the bet amount..."
-                            onChange={n => setBetAmount(n)}
+                            onChange={n => {
+                                if (cssState.name != "wheel start-rotate") {
+                                    setBetAmount(n)
+                                }
+                            }
+                            }
                             showUnits={true}
                         >
                         </FormField>
                     </div>
                     <div>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])}>1 to 12</Button>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])}>13 to 24</Button>
                         <Button className="game button big"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36])}>25 to 36</Button>
                     </div>
                     <div>
                         <Button className="game button small"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36])}>EVEN</Button>
                         <Button className="game button small red"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([32, 19, 21, 25, 34, 27, 36, 30, 23, 5, 16, 1, 14, 9, 18, 7, 12, 3])}>RED</Button>
                         <Button className="game button small black"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26])}>BLACK</Button>
                         <Button className="game button small"
+                            disabled={cssState.name === "wheel start-rotate"}
                             onClick={() => setBetNumbers([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35])}>ODD</Button>
                     </div>
                     <FormField
@@ -189,7 +175,16 @@ const RouletteWheel = () => {
                         label="Bet numbers"
                         value={betNumbers}
                         placeholder="Introduce a single number or choose an option..."
-                        onChange={n => setBetNumbers([n])}
+                        onChange={n => {
+                            if (cssState.name != "wheel start-rotate") {
+                                if (n != '') {
+                                    setBetNumbers([n])
+                                }
+                                else {
+                                    setBetNumbers([]);
+                                }
+                            }
+                        }}
                         showUnits={false}
                     />
                 </div>
